@@ -3,14 +3,14 @@
 int main()
 {
     {
-        Zombie zombie("Nigga");
+        Zombie zombie("Richard");
 
-    zombie.announce();
+        zombie.announce();
     }
 
     Zombie *Foo;
     Foo = newZombie("Fool");
     Foo->announce();
     delete Foo;
-    randomChump("your mom");
+    randomChump("Zues");
 }
