@@ -32,14 +32,14 @@ public:
 
     // increment/decrement
     Fixed &operator++();
-    Fixed &operator++(int);
+    Fixed operator++(int);
     Fixed &operator--();
-    Fixed &operator--(int);
+    Fixed operator--(int);
     // min & max
     static Fixed &min(Fixed &fisrt, Fixed &second);
-    static Fixed &min(const Fixed &fisrt, const Fixed &second);
+    static const Fixed &min(const Fixed &fisrt, const Fixed &second);
     static Fixed &max(Fixed &fisrt, Fixed &second);
-    static Fixed &max(const Fixed &fisrt, const Fixed &second);
+    static const Fixed &max(const Fixed &fisrt, const Fixed &second);
 
     float toFloat( void ) const;
     int toInt( void ) const;
