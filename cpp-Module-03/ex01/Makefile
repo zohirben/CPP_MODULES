@@ -1,6 +1,6 @@
 CPP = c++
 
-CPPFLAGS = #-Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SOURCE = main.cpp ClapTrap.cpp ScavTrap.cpp
 

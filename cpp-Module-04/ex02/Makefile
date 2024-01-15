@@ -2,18 +2,18 @@ CPP = c++
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SOURCE = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
+SOURCE = main.cpp Animal.cpp Dog.cpp Cat.cpp Brain.cpp
 
 OBJ = $(SOURCE:.cpp=.o)
 
-TARGET =  fragtrap
+TARGET =  animalv3
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@$(CPP) $(CPPFLAGS) $(OBJ) -o $(TARGET)
 
-%.o : %.cpp ClapTrap.hpp ScavTrap.hpp FragTrap.hpp
+%.o : %.cpp Animal.hpp Dog.hpp Cat.hpp Brain.hpp
 	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
