@@ -6,7 +6,9 @@ int main()
 
     try
     {
-        janitor.setGrade(-1290);
+        int btata;
+        std::cin >> btata;
+        janitor.setGrade(btata);
     }
     catch (const Bureaucrat::GradeTooHighException &e)
     {
@@ -23,7 +25,18 @@ int main()
         Bureaucrat lf;
 
         std::cout << lf << std::endl;
-        lf.decrementGrade();
+        // here we didnt make a catch if the grade is too high so if we tried to increment after grade 1 
+        // it will abord the program
+        try
+        {
+            lf.decrementGrade();
+        }
+        catch(const Bureaucrat::GradeTooLowException& e)
+        {
+            std::cerr << "Caught exception: " << e.what() << '\n';
+        }
+        
+        
         std::cout << lf << std::endl;
     }
     return (0);
