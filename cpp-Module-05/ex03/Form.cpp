@@ -15,12 +15,10 @@ Form::Form(const std::string &name, int signGrade, int executeGrade) : name(name
 
 Form::Form(const Form &copy) : name(copy.name), signGrade(copy.signGrade), executeGrade(copy.executeGrade)
 {
-    std::cout << "Form Copy constructor called" << std::endl;
 }
 
 Form &Form::operator=(const Form &other)
 {
-    std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
     {
         this->is_signed = other.is_signed;
@@ -30,7 +28,6 @@ Form &Form::operator=(const Form &other)
 
 Form::~Form()
 {
-    std::cout << "Destructor called" << std::endl;
 }
 
 // setters and getters
@@ -70,4 +67,13 @@ void Form::beSigned(Bureaucrat &obj)
         this->is_signed = true;
     else
         throw GradeTooLowException();
+}
+
+void Form::execute(Bureaucrat const & executor) const
+{
+    if (!getsigned())
+        throw std::runtime_error("Form is not signed");
+    if (executor.getGrade() > getExecuteGrade())
+        throw GradeTooLowException();
+    executeAction(executor);
 }
