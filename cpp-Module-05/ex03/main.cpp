@@ -19,6 +19,7 @@ int main()
         {
             std::cout << "Created a form with name: " << rrf->getName() << std::endl;
         }
+        delete rrf;
     }
 
     return 0;
