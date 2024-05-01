@@ -2,7 +2,7 @@ CPP = c++
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SOURCE = main.cpp ScalarConverter.cpp
+SOURCE = main.cpp ScalarConverter.cpp Converters.cpp
 
 OBJ = $(SOURCE:.cpp=.o)
 
