@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "Converters.cpp"
-
+#include "Converters.hpp"
+#include <cmath>
 class ScalarConverter
 {
     private:

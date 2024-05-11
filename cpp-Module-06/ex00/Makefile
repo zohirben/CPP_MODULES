@@ -13,7 +13,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	@$(CPP) $(CPPFLAGS) $(OBJ) -o $(TARGET)
 
-%.o : %.cpp ScalarConverter.hpp
+%.o : %.cpp ScalarConverter.hpp Converters.hpp
 	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 clean:
