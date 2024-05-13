@@ -2,9 +2,8 @@
 #include <string>
 #include "ScalarConverter.hpp"
 
-int main()
+int main(int ac, char **av)
 {
-    std::string input;
-    std::cin >> input;
-    ScalarConverter::convert(input);
+    if (ac == 2)
+        ScalarConverter::convert(av[1]);
 }

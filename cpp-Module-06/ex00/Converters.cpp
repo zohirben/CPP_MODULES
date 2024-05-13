@@ -7,7 +7,7 @@ void printAll(char c, int i, float f, double d)
     else if (std::isnan(f) || std::isinf(f))
         std::cout << "char: impossible" << c << std::endl;
     else
-        std::cout << "char: Non Displayable" << c << std::endl;
+        std::cout << "char: Non Displayable" << c ;
     if (std::isnan(i) || std::isinf(i))
         std::cout << "int: impossible" << i << std::endl;
     else

@@ -2,7 +2,7 @@
 
 void ScalarConverter::convert(const std::string &input)
 {
-    if (input.length() == 1 && std::isalpha(input[0]))
+    if (input.length() == 1 && std::isprint(input[0]))
     {
         // std::cout << "this is a character!" << std::endl;
         ConvertChar(input);
