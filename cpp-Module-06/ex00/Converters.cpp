@@ -2,14 +2,14 @@
 
 void printAll(char c, int i, float f, double d)
 {
-    if (std::isprint(c))
+    if (std::isprint(c) )
         std::cout << "char: '" << c << "'\n";
     else if (std::isnan(f) || std::isinf(f))
         std::cout << "char: impossible" << c << std::endl;
     else
-        std::cout << "char: Non Displayable" << c ;
-    if (std::isnan(i) || std::isinf(i))
-        std::cout << "int: impossible" << i << std::endl;
+        std::cout << "char: Non Displayable" << std::endl;
+    if (std::isnan(d) || std::isinf(d))
+        std::cout << "int: impossible" << std::endl;
     else
         std::cout << "int: " << i << std::endl;
     std::cout << std::setprecision(1);
@@ -24,7 +24,7 @@ void ConvertChar(std::string input)
     float f;
     double d;
     char character = input[0];
-    
+
     c = character;
     i = static_cast<int>(character);
     f = static_cast<float>(character);
@@ -39,8 +39,18 @@ void ConvertInt(std::string input)
     int i;
     float f;
     double d;
-    int numInt = std::stoi(input);
-    
+    int numInt;
+
+    try
+    {
+        numInt = std::stoi(input);
+    }
+    catch (std::out_of_range &e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+        return;
+    }
+
     c = static_cast<char>(numInt);
     i = numInt;
     f = static_cast<float>(numInt);
@@ -56,7 +66,7 @@ void ConvertFloat(std::string input)
     float f;
     double d;
     float numFloat = std::stof(input);
-    
+
     c = static_cast<char>(numFloat);
     i = static_cast<int>(numFloat);
     f = numFloat;

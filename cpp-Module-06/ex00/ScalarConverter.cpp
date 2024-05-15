@@ -1,21 +1,42 @@
 #include "ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter() {
+    
+}
+
+ScalarConverter::ScalarConverter( const ScalarConverter& other ) {
+    *this = other;
+}
+
+ScalarConverter& ScalarConverter::operator=( const ScalarConverter& other ) {
+    (void)other;
+    return *this;
+}
+
+ScalarConverter::~ScalarConverter () {
+    
+}
+
 void ScalarConverter::convert(const std::string &input)
 {
-    if (input.length() == 1 && std::isprint(input[0]))
+    if (input == "nan" || input == "+inf" || input == "-inf" || input == "-inff" || input == "+inff")
+    {
+        ConvertDouble(input);
+    }
+    else if (std::all_of(input.begin(), input.end(), ::isdigit))
+    {
+        // std::cout << "this is an integer!" << std::endl;
+        ConvertInt(input);
+    }
+    else if (input.length() == 1 && std::isprint(input[0]))
     {
         // std::cout << "this is a character!" << std::endl;
         ConvertChar(input);
     }
     else if (std::all_of(input.begin(), input.end(), ::isalpha))
-        {
+    {
         std::cout << "you cant convert a string!" << std::endl;
         exit(0);
-        }
-    else if (std::all_of(input.begin(), input.end(), ::isdigit))
-    {
-        // std::cout << "this is an integer!" << std::endl;
-        ConvertInt(input);
     }
     else if (input.find('.') != std::string::npos)
     {
