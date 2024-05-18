@@ -6,7 +6,7 @@ SOURCE = main.cpp Base.cpp
 
 OBJ = $(SOURCE:.cpp=.o)
 
-TARGET = Serializer
+TARGET = identify
 
 all: $(TARGET)
 
