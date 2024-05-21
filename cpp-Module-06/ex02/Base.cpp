@@ -6,6 +6,7 @@ Base::~Base()
 
 Base *generate(void)
 {
+    // sets the random function seed to different number based on current time
     std::srand(std::time(0));
     int random = 2;
     random = std::rand() % 3;
@@ -37,6 +38,8 @@ void identify(Base &p)
 {
     try
     {
+        // a is a reference to an A object so if the casting is succeeded it will print out the type of object.
+        // else it will throw and exception 
         A &a = dynamic_cast<A&>(p);
         std::cout << "Object Refferenced By p is A" << std::endl;
         (void)a;
