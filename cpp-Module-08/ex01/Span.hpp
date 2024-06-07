@@ -37,6 +37,7 @@ public:
     };
 
     void    addNumber(int x);
+    void    FillSpan();
     int    shortestSpan();
     int    longestSpan();
 };

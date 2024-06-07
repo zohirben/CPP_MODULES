@@ -53,3 +53,16 @@ int Span::longestSpan()
     std::vector<int>::iterator it = std::max_element(SpanNums.begin(), SpanNums.end());
     return *it;
 }
+
+// fill the whole container to its max with random numbers
+void    Span::FillSpan()
+{
+    std::srand(std::time(0));
+    if (SpanNums.size() < MaxNums)
+    {
+        std::vector<int> temp(MaxNums - SpanNums.size());
+        std::generate(temp.begin(), temp.end(), std::rand);
+        SpanNums.insert(SpanNums.end(), temp.begin(), temp.end());
+    }
+    std::cout << "current full size: " << SpanNums.size() << std::endl;
+}

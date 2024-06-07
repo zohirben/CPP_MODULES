@@ -36,30 +36,10 @@ int main()
         std::cout << "Span Length: " << N << std::endl;
         Span sp(N);
 
-        std::srand(std::time(0)); // use current time as seed for random generator
+        sp.FillSpan();
 
-        try
-        {
-            for (unsigned int i = 0; i < (N-1); ++i)
-            {
-                sp.addNumber(std::rand()); // add a random number to sp
-            }
-            // sp.addNumber(3);
-        }
-        catch (Span::SpanFullException &e)
-        {
-            std::cerr << "exception: " << e.what() << std::endl;
-        }
-
-        try
-        {
-            std::cout << "shortest: " << sp.shortestSpan() << std::endl;
-            std::cout << "lognest: " << sp.longestSpan() << std::endl;
-        }
-        catch (Span::SpanNotFoundException &e)
-        {
-            std::cerr << "exception: " << e.what() << '\n';
-        }
+        std::cout << "shortest: " << sp.shortestSpan() << std::endl;
+        std::cout << "lognest: " << sp.longestSpan() << std::endl;
     }
 
     return (0);
