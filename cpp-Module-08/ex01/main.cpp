@@ -2,16 +2,17 @@
 
 int main()
 {
-    Span sp(6);
+    Span sp(5);
 
     try
     {
+        sp.addNumber(6);
         sp.addNumber(3);
-        sp.addNumber(2);
-        sp.addNumber(5);
-        sp.addNumber(10);
-        sp.addNumber(30);
+        sp.addNumber(17);
         sp.addNumber(9);
+        sp.addNumber(11);
+                std::cout << "shortest: " << sp.shortestSpan() << std::endl;
+        std::cout << "lognest: " << sp.longestSpan() << std::endl;
     }
     catch (Span::SpanFullException &e)
     {

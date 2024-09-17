@@ -36,13 +36,21 @@ int Span::shortestSpan()
 {
     if (SpanNums.empty() || SpanNums.size() == 1)
         throw SpanNotFoundException();
-    // std::sort(SpanNums.begin(), SpanNums.end());
-    // return SpanNums.front();
-    // sorting everytime you enter a function is a heavy performance on the program.
+    std::sort(SpanNums.begin(), SpanNums.end());
 
-    // simpler, eaiser, faster :D
-    std::vector<int>::iterator it = std::min_element(SpanNums.begin(), SpanNums.end());
-    return *it;
+    int distance = INT_MAX;
+    int temp = 0;
+    for(unsigned long i = 0; i < SpanNums.size(); i++)
+    {
+        temp = SpanNums[i+1] - SpanNums[i];
+        if (temp >= 0 && temp < distance)
+        {
+            distance = temp;
+        }
+    }
+    if (distance == INT_MAX)
+        return (-1);
+    return (distance);
 }
 
 int Span::longestSpan()
@@ -50,8 +58,8 @@ int Span::longestSpan()
     if (SpanNums.empty() || SpanNums.size() == 1)
         throw SpanNotFoundException();
 
-    std::vector<int>::iterator it = std::max_element(SpanNums.begin(), SpanNums.end());
-    return *it;
+    std::sort(SpanNums.begin(), SpanNums.end());
+    return (SpanNums[SpanNums.size() - 1] - SpanNums[0]);
 }
 
 // fill the whole container to its max with random numbers
