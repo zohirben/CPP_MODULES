@@ -46,8 +46,8 @@ int ft_atoi(const std::string &str)
     return num;
 }
 
-bool ValidateDate(const std::string& year, const std::string& month, const std::string& day) {
-    
+bool ValidateDate(const std::string& year, const std::string& month, const std::string& day) 
+{
     if (year.size() == 4 && ft_atoi(year) > 0 && isNumber(year))
         if (month.size() == 2 && ft_atoi(month) && isNumber(month) && (ft_atoi(month) >= 1 && ft_atoi(month) <= 12))
             if (day.size() == 2 && ft_atoi(day) && isNumber(day) && (ft_atoi(day) >= 1 && ft_atoi(day) <= 31))
@@ -56,6 +56,23 @@ bool ValidateDate(const std::string& year, const std::string& month, const std::
     return false;
 }
 
-bool ValidateValue(double value) {
-    return value >= 0 && value <= 1000;
+bool ValidateValue(double value) 
+{
+    if (!value)
+    {
+        std::cerr << "Error: no value detected." << std::endl;
+        return false;
+    }
+    else if (value < 0)
+    {
+        std::cerr << "Error: not a positive number." << std::endl;
+        return false;
+    }
+    else if (value > 1000)
+    {
+        std::cerr << "Error: too large a number." << std::endl;
+        return false;
+    }
+    
+    return true;
 }

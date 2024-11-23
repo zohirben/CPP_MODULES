@@ -15,10 +15,9 @@ int main(int ac, char **av)
     std::ifstream inputFile;
     CheckFile(av[1], inputFile);
 
-
     std::getline(inputFile, line);
-    while(std::getline(inputFile, line))
-    {   
+    while (std::getline(inputFile, line))
+    {
         std::istringstream ss(line);
         std::string date, year, month, day;
         double value;
@@ -27,15 +26,20 @@ int main(int ac, char **av)
         std::getline(ss, month, '-');
         std::getline(ss, day, '|');
 
-        day.erase(day.find_last_not_of(" \n\r\t")+1);
-        if (!ValidateDate(year, month, day)) {
-            std::cerr << "Error: invalid date format." << std::endl;
+        day.erase(day.find_last_not_of(" \n\r\t") + 1);
+        if (!ValidateDate(year, month, day))
+        {
+            std::cerr << "Error: bad Input => " + year + "-" + month + "-" + day << std::endl;
             continue;
         }
-        
-        ss >> value;
-        if (!ValidateValue(value)) {
-            std::cerr << "Error: invalid value." << std::endl;
+
+        if (!(ss >> value))
+        {
+            std::cerr << "Error: no value detected for date " << std::endl;
+            continue;
+        }
+        if (!ValidateValue(value))
+        {
             continue;
         }
 
@@ -52,12 +56,5 @@ int main(int ac, char **av)
         }
         else
             std::cout << "No Date Was Found!" << std::endl;
-    }   
+    }
 }
-
-// Todo: list
-// check file input.txt if you were able to open it and other errors related to it
-// seperate each date month , day , year and check each one of them, probably make function including them all
-// check value next to them if its max int or negative 
-// for each error displayed just display the first error you encounter and use (continue;) to go to the next iteration
-// ez pz you can do all that in one day alright?
