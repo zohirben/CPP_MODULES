@@ -61,7 +61,7 @@ bool ValidateValue(double value)
     if (!value)
     {
         std::cerr << "Error: no value detected." << std::endl;
-        return false;
+        return false;`
     }
     else if (value < 0)
     {
