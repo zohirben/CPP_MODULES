@@ -1,9 +1,0 @@
-load the csv database into a map container
-while loop through the input.txt
-    seperate the date and value
-    seperate date by yaer month and day
-    check the validation of the year, month, day(number not negative, not out of range)
-    check the value
-    search database for matched date
-    if not found search for lower date by lowring the iterator of it
-    print date and exchange multiplied by value or print error

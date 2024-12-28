@@ -26,7 +26,7 @@ int main(int ac, char **av)
         std::getline(ss, month, '-');
         std::getline(ss, day, '|');
 
-        day.erase(day.find_last_not_of(" \n\r\t") + 1);
+        day.erase(day.find_last_not_of(" \n\r\t") + 1); // cut the space near day so date will be parsed perfectly
         if (!ValidateDate(year, month, day))
         {
             std::cerr << "Error: bad Input => " + year + "-" + month + "-" + day << std::endl;
@@ -46,8 +46,12 @@ int main(int ac, char **av)
         date = year + "-" + month + "-" + day;
         // std::cout << "date: " << date << " value: " << value << std::endl;
 
+        // lower_bound returns the first element in the map whose not less than specified date
+        // if the date matches the input file then it retuns the specified date
+        // else it returns the element whose above/greater than the specified date,
+        // thats why i decreamented the iterator so it selects an element that less than the wanted date if not found.
         std::map<std::string, double>::iterator it = Database.lower_bound(date);
-        if (it != Database.end() && it->first == date)
+        if (it != Database.end() && it->first == date) // if the iterator didnt reach end() that means it found something
             std::cout << date << " => " << value << " = " << (value * it->second) << std::endl;
         else if (it != Database.end() && it->first != date)
         {

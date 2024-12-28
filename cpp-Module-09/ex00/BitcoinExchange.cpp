@@ -1,10 +1,10 @@
 #include "BitcoinExchange.hpp"
 
-
+/*load the cvs's data into a container which will be used later for comparing*/
 void LoadData(std::ifstream &file, std::map<std::string, double> &Database)
 {
     std::string line;
-    std::getline(file, line);
+    std::getline(file, line); // skip the first line
 
 
     while(std::getline(file, line))
@@ -22,7 +22,7 @@ void LoadData(std::ifstream &file, std::map<std::string, double> &Database)
 
 void CheckFile(const std::string &name, std::ifstream &file)
 {
-    file.open(name.c_str());
+    file.open(name.c_str()); // i had to turn std::string into c style string cuz the function requires a const char pointer
     if (!file.is_open()) {
         std::cerr << "Error: could not open file " << name << std::endl;
         exit(1);
@@ -61,7 +61,7 @@ bool ValidateValue(double value)
     if (!value)
     {
         std::cerr << "Error: no value detected." << std::endl;
-        return false;`
+        return false;
     }
     else if (value < 0)
     {
