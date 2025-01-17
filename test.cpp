@@ -10,20 +10,16 @@ void merge(std::vector<int> &arr, int left, int mid, int right)
     int len1 = mid - left + 1;
 	int len2 = right - mid;
 
+	// std::cout << "left: " << left << " mid: " << mid << " right: " << right << std::endl; 
+	// std::cout << "len1: " << len1 << std::endl;
+	// std::cout << "len2: " << len2 << std::endl;
 	std::vector<int> L(len1), R(len2);
 
 	for (int i = 0; i < len1; i++)
-	{
 		L[i] = arr[left + i];
-		std::cout <<"element " << i << " in left subarray: " << L[i] << std::endl;
-	}
-	std::cout << "------------------\n";
+
 	for (int i = 0; i < len2; i++)
-	{
 		R[i] = arr[mid + 1 + i];
-		std::cout <<"element " << i << " in right subarray: " << R[i] << std::endl;
-	}
-	std::cout << ">>>>>>>>>>>>>>>>>>>\n";
 
 	// comparing both lists
 	int i = 0;
@@ -32,7 +28,7 @@ void merge(std::vector<int> &arr, int left, int mid, int right)
 	while (i < len1 && j < len2)
 	{
 		// we can add = to make sure it puts repititive numbers together
-		if (L[i] < R[j])
+		if (L[i] <= R[j])
 		{
 			arr[k] = L[i];
 			i++;
@@ -75,7 +71,7 @@ void	mergeSort(std::vector<int> &arr, int left, int right)
 
 int main(int ac, char **av)
 {
-	std::vector<int> numbers = {4, 2, 10, 6, 3, 15, 92, 100};
+	std::vector<int> numbers = {4, 2, 2, 6, 1, 3, 15, 92, 100};
 	int size = numbers.size();
 
 	std::cout << "unsorted array: ";
