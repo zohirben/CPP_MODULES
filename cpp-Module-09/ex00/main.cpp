@@ -35,7 +35,7 @@ int main(int ac, char **av)
 
         if (!(ss >> value))
         {
-            std::cerr << "Error: no value detected for date " << std::endl;
+            std::cerr << "Error: Cannot Detect value for date " << std::endl;
             continue;
         }
         if (!ValidateValue(value))
