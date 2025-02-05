@@ -72,9 +72,10 @@ std::vector<int> insert_order_jaco(int length) {
 
     std::cout << "insertion order: ";
     for (int i = 0; i < insertion_order.size(); i++) {
-       std::cout << insertion_order[i] << " ";
+        std::cout << insertion_order[i] << " ";
     }
     std::cout << std::endl;
+
     return insertion_order;
 }
 
@@ -198,7 +199,7 @@ int main(int ac, char **av)
         int pos = binary_search(MainChain, struggler);
         MainChain.insert(MainChain.begin() + pos, struggler);
     }
-    
+
 	std::cout << "insertion order array: ";
 	for (int i = 0; i < insertion_order.size(); i++)
 	{
