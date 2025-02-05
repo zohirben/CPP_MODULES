@@ -113,7 +113,7 @@ void insert_pend(std::vector<int>& main_chain, const std::vector<int>& pend, con
 
 int main(int ac, char **av)
 {
-	std::vector<int> numbers = {7, 8, 27, 100, 11, 46, 2, 53};
+	std::vector<int> numbers = {7, 8, 27, 100, 11, 46, 2, 53, 1};
 
 	int size = numbers.size();
 	std::cout << "unsorted array: ";
@@ -194,6 +194,11 @@ int main(int ac, char **av)
     // insert pend elements into main chain using insertion order + binary search
     insert_pend(MainChain, Pend, insertion_order);
 
+    if (struggler != -1) {
+        int pos = binary_search(MainChain, struggler);
+        MainChain.insert(MainChain.begin() + pos, struggler);
+    }
+    
 	std::cout << "insertion order array: ";
 	for (int i = 0; i < insertion_order.size(); i++)
 	{
