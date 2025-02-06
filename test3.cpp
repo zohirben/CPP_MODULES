@@ -6,12 +6,15 @@
 #include <utility>
 #include <cmath>
 
-int partition(std::vector<std::pair<int, int> > &pairs, int low, int high) {
+int partition(std::vector<std::pair<int, int>> &pairs, int low, int high)
+{
     int pivot = pairs[high].first;
     int i = low - 1;
 
-    for (int j = low; j < high; ++j) {
-        if (pairs[j].first <= pivot) {
+    for (int j = low; j < high; ++j)
+    {
+        if (pairs[j].first <= pivot)
+        {
             ++i;
             std::swap(pairs[i], pairs[j]);
         }
@@ -20,82 +23,94 @@ int partition(std::vector<std::pair<int, int> > &pairs, int low, int high) {
     return i + 1;
 }
 
-void quicksort(std::vector<std::pair<int, int> > &pairs, int low, int high) {
-    if (low < high) {
+void quicksort(std::vector<std::pair<int, int>> &pairs, int low, int high)
+{
+    if (low < high)
+    {
         int pi = partition(pairs, low, high);
         quicksort(pairs, low, pi - 1);
         quicksort(pairs, pi + 1, high);
     }
 }
 
-std::vector<int> generate_jacobsthal(int length) {
+std::vector<int> generate_jacobsthal(int max_needed)
+{
     std::vector<int> jacobsthal;
-    if (length > 0) jacobsthal.push_back(0);
-    if (length > 1) jacobsthal.push_back(1);
-    std::cout << "jacobsthal: ";
-    // we gonna start from 3 since we already pushed the first pend 
-    // this will cause the duplicate problem if we didnt handle it
-    for (int i = 3; i < length; i++) {
-        int NewJacobsthal = jacobsthal[i - 1] + 2 * jacobsthal[i - 2];
-        std::cout << NewJacobsthal << ", ";
-        jacobsthal.push_back(NewJacobsthal);
+    if (max_needed >= 1)
+        jacobsthal.push_back(0); // J(0) = 0
+    if (max_needed >= 2)
+        jacobsthal.push_back(1); // J(1) = 1
+
+    // Generate until the last term exceeds max_needed
+    while (jacobsthal.back() <= max_needed && jacobsthal.size() < max_needed)
+    {
+        int next = jacobsthal[jacobsthal.size() - 1] + 2 * jacobsthal[jacobsthal.size() - 2];
+        jacobsthal.push_back(next);
     }
+
+    std::cout << "jacobsthal: ";
+    for (int num : jacobsthal)
+        std::cout << num << " ";
     std::cout << std::endl;
     return jacobsthal;
 }
 
-std::vector<int> insert_order_jaco(int length) {
-    std::vector<int> jacob_sequence = generate_jacobsthal(length);
+std::vector<int> insert_order_jaco(int pend_size) {
+    std::vector<int> jacob_sequence = generate_jacobsthal(pend_size);
     std::vector<int> insertion_order;
 
-    // Start from the largest Jacobsthal number <= length and work backward
-    for (int i = jacob_sequence.size() - 1; i > 0; --i) {
+    // Step 1: Add Jacobsthal-derived indices (largest first)
+    for (int i = jacob_sequence.size() - 1; i >= 0; --i) {
         int j = jacob_sequence[i];
-        if (j <= length && j > 0) {
-            insertion_order.push_back(j - 1);
+        if (j <= pend_size && j > 0) {
+            int index = j - 1;
+            if (std::find(insertion_order.begin(), insertion_order.end(), index) == insertion_order.end()) {
+                insertion_order.push_back(index);
+            }
         }
     }
 
-    // Add remaining indices in reverse order
-    for (int i = length - 1; i >= 0; --i) {
-        bool exists = false;
-        for (int k = 0; k < insertion_order.size(); ++k) {
-            if (insertion_order[k] == i) {
-                exists = true;
-                break;
-            }
-        }
-        if (!exists) {
+    // Step 2: Add remaining indices in reverse order
+    for (int i = pend_size - 1; i >= 0; --i) {
+        if (std::find(insertion_order.begin(), insertion_order.end(), i) == insertion_order.end()) {
             insertion_order.push_back(i);
         }
     }
 
     std::cout << "insertion order: ";
-    for (int i = 0; i < insertion_order.size(); i++) {
-        std::cout << insertion_order[i] << " ";
-    }
+    for (int idx : insertion_order) std::cout << idx << " ";
     std::cout << std::endl;
-
     return insertion_order;
 }
 
-int binary_search(const std::vector<int>& arr, int target) {
+
+
+
+int binary_search(const std::vector<int> &arr, int target)
+{
     int low = 0, high = arr.size() - 1;
-    while (low <= high) {
+    while (low <= high)
+    {
         int mid = low + (high - low) / 2;
-        if (arr[mid] < target) {
+        if (arr[mid] < target)
+        {
             low = mid + 1;
-        } else {
+        }
+        else
+        {
             high = mid - 1;
         }
     }
     return low;
 }
 
-void insert_pend(std::vector<int>& main_chain, const std::vector<int>& pend, const std::vector<int>& insertion_order) {
-    for (std::vector<int>::const_iterator it = insertion_order.begin(); it != insertion_order.end(); ++it) {
+void insert_pend(std::vector<int> &main_chain, const std::vector<int> &pend, const std::vector<int> &insertion_order)
+{
+    for (std::vector<int>::const_iterator it = insertion_order.begin(); it != insertion_order.end(); ++it)
+    {
         int index = *it;
-        if (index >= 0 && index < (int)pend.size()) {
+        if (index >= 0 && index < (int)pend.size())
+        {
             int element = pend[index];
             std::cout << "element: " << element << std::endl;
 
@@ -103,27 +118,27 @@ void insert_pend(std::vector<int>& main_chain, const std::vector<int>& pend, con
             std::cout << "pos: " << pos << std::endl;
             main_chain.insert(main_chain.begin() + pos, element);
             std::cout << "main chain array: ";
-    for (int i = 0; i < main_chain.size(); i++) {
-       std::cout << main_chain[i] << " ";
-    }
-    std::cout << std::endl;
+            for (int i = 0; i < main_chain.size(); i++)
+            {
+                std::cout << main_chain[i] << " ";
+            }
+            std::cout << std::endl;
         }
     }
 }
 
-
 int main(int ac, char **av)
 {
-	std::vector<int> numbers = {7, 8, 27, 100, 11, 46, 2, 53, 1};
+    // std::vector<int> numbers = {7, 8, 27, 100, 11, 46, 2, 53, 1};
+    std::vector<int> numbers = {7, 8, 27, 100, 11, 46, 2, 53, 1, 300, 50, 95 , 102, 19};
 
-	int size = numbers.size();
-	std::cout << "unsorted array: ";
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << numbers[i] << " ";
-	}
-	std::cout << std::endl;
-	
+    int size = numbers.size();
+    std::cout << "unsorted array: ";
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << numbers[i] << " ";
+    }
+    std::cout << std::endl;
 
     // create a struggler so that we store the last element in it if the array size is odd
     // so we can make sorting easier
@@ -137,8 +152,8 @@ int main(int ac, char **av)
 
     // Elements are grouped into pairs, and the larger element in each pair is moved to the first position.
     // so we can sort them easier
-    std::vector<std::pair<int, int> > pairs;
-    for(int i = 0; i < size - 1; i +=2)
+    std::vector<std::pair<int, int>> pairs;
+    for (int i = 0; i < size - 1; i += 2)
     {
         std::pair<int, int> pair = std::make_pair(numbers[i], numbers[i + 1]);
         if (pair.second > pair.first)
@@ -157,7 +172,7 @@ int main(int ac, char **av)
 
     std::vector<int> MainChain;
     std::vector<int> Pend;
-    for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
+    for (std::vector<std::pair<int, int>>::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
         MainChain.push_back(it->first);
         Pend.push_back(it->second);
@@ -165,51 +180,59 @@ int main(int ac, char **av)
     std::cout << std::endl;
 
     std::cout << "pairs of consecutive elements: ";
-    for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
+    for (std::vector<std::pair<int, int>>::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
         std::cout << "(" << it->first << ", " << it->second << ") ";
     }
     std::cout << std::endl;
 
     std::cout << "Main Chain: ";
-	for (int i = 0; i < MainChain.size(); i++)
-	{
-		std::cout << MainChain[i] << " ";
-	}
+    for (int i = 0; i < MainChain.size(); i++)
+    {
+        std::cout << MainChain[i] << " ";
+    }
     std::cout << std::endl;
 
     std::cout << "Pend: ";
-	for (int i = 0; i < Pend.size(); i++)
-	{
-		std::cout << Pend[i] << ", ";
-	}
+    for (int i = 0; i < Pend.size(); i++)
+    {
+        std::cout << Pend[i] << ", ";
+    }
     std::cout << std::endl;
     std::cout << std::endl;
 
+    if (Pend[0] < MainChain[0])
+    {
+        int pos = binary_search(MainChain, Pend[0]);
+        MainChain.insert(MainChain.begin() + pos, Pend[0]);
+        Pend.erase(Pend.begin());
+    }
     // Generates a sequence of numbers used to determine the optimal insertion order for pend elements
     // The Jacobsthal sequence is used to determine the optimal order for inserting pend elements into the main chain
     // J(n)=J(n−1)+2⋅J(n−2)
     // then use that sequence to determine the shortest order to sort the pend into main chain using binary searchd
     std::vector<int> insertion_order = insert_order_jaco(Pend.size());
-    
+
+    // inesrt first pend element into main chain
     // insert pend elements into main chain using insertion order + binary search
     insert_pend(MainChain, Pend, insertion_order);
 
-    if (struggler != -1) {
+    if (struggler != -1)
+    {
         int pos = binary_search(MainChain, struggler);
         MainChain.insert(MainChain.begin() + pos, struggler);
     }
-
-	std::cout << "insertion order array: ";
-	for (int i = 0; i < insertion_order.size(); i++)
-	{
-		std::cout << insertion_order[i] << " ";
-	}
+    std::cout << "insertion order array: ";
+    for (int i = 0; i < insertion_order.size(); i++)
+    {
+        std::cout << insertion_order[i] << " ";
+    }
     std::cout << std::endl;
 
     std::cout << "sorted array: ";
-    for (int i = 0; i < MainChain.size(); i++) {
-       std::cout << MainChain[i] << " ";
+    for (int i = 0; i < MainChain.size(); i++)
+    {
+        std::cout << MainChain[i] << " ";
     }
     std::cout << std::endl;
 }
