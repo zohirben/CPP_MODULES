@@ -1,14 +1,24 @@
 #include "PmergeMe.hpp"
 
-void loadData(std::vector<int>& vec, std::list<int>& lst, char** av) 
+void loadData(std::vector<int>& vec, std::list<int>& lst, char** av, int ac) 
 {
-    for (int i = 1; av[i] != nullptr; ++i) 
+    if (ac == 1)
+    {
+        exit(1);
+    }
+    // easier reading and parsing using strstream
+    std::stringstream ss;
+    for (int i = 1; i < ac; i++)
+        ss << av[i] << " ";
+
+    std::string token;
+    while (ss >> token)
     {
         try 
         {
             // stoi automaticly throws exceptions for invalid non numeric numbers and out of range
             // so all we gotta do is catch them ;)
-            int number = std::stoi(av[i]);
+            int number = std::stoi(token);
             if (number < 0)
             {
                 std::cerr << "Error" << std::endl;
@@ -20,13 +30,11 @@ void loadData(std::vector<int>& vec, std::list<int>& lst, char** av)
         } 
         catch (const std::invalid_argument& e) 
         {
-            std::cerr << "Invalid argument: " << av[i] << " is not a number." << std::endl;
             std::cerr << "Error" << std::endl;
             exit(1);
         } 
         catch (const std::out_of_range& e)
         {
-            std::cerr << "Out of range: " << av[i] << " is too large." << std::endl;
             std::cerr << "Error" << std::endl;
             exit(1);
         }
@@ -63,10 +71,10 @@ void quicksort(std::vector<std::pair<int, int> > &pairs, int low, int high)
 std::vector<int> generate_jacobsthal(int max_needed)
 {
     std::vector<int> jacobsthal;
-    if (max_needed >= 1)
-        jacobsthal.push_back(0); // J(0) = 0
-    if (max_needed >= 2)
-        jacobsthal.push_back(1); // J(1) = 1
+
+    // jacobsthal[0, 1]
+    jacobsthal.push_back(0);
+    jacobsthal.push_back(1);
 
     // Generate until the last term exceeds max_needed
     while ((int)jacobsthal.back() <= max_needed && (int)jacobsthal.size() < max_needed)
@@ -92,7 +100,6 @@ std::vector<int> insert_order_jaco(int pend_size) {
             }
         }
     }
-
     // Step 2: Add remaining indices in reverse order
     for (int i = pend_size - 1; i >= 0; --i) {
         if (std::find(insertion_order.begin(), insertion_order.end(), i) == insertion_order.end()) {
@@ -192,6 +199,8 @@ void ford_johnson_vector(std::vector<int>& vector) {
     // J(n)=J(n−1)+2⋅J(n−2)
     // then use that sequence to determine the shortest order to sort the pend into main chain using binary searchd
     std::vector<int> insertion_order = insert_order_jaco(Pend.size());
+    for (size_t i = 0; i < vector.size(); ++i) std::cout << vector[i] << " ";
+    std::cout << std::endl;
 
     // inesrt first pend element into main chain
     // insert pend elements into main chain using insertion order + binary search
