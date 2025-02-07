@@ -1,6 +1,20 @@
 #include "PmergeMe.hpp"
 
-int partition(std::vector<std::pair<int, int>> &pairs, int low, int high)
+void loadData(std::vector<int>& vec, std::list<int>& lst, char** av) {
+    for (int i = 1; av[i] != nullptr; ++i) {
+        try {
+            int number = std::stoi(av[i]);
+            vec.push_back(number);
+            lst.push_back(number);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid argument: " << av[i] << " is not a number." << std::endl;
+        } catch (const std::out_of_range& e) {
+            std::cerr << "Out of range: " << av[i] << " is too large." << std::endl;
+        }
+    }
+}
+
+int partition(std::vector<std::pair<int, int> > &pairs, int low, int high)
 {
     int pivot = pairs[high].first;
     int i = low - 1;
@@ -17,7 +31,7 @@ int partition(std::vector<std::pair<int, int>> &pairs, int low, int high)
     return i + 1;
 }
 
-void quicksort(std::vector<std::pair<int, int>> &pairs, int low, int high)
+void quicksort(std::vector<std::pair<int, int> > &pairs, int low, int high)
 {
     if (low < high)
     {
@@ -36,7 +50,7 @@ std::vector<int> generate_jacobsthal(int max_needed)
         jacobsthal.push_back(1); // J(1) = 1
 
     // Generate until the last term exceeds max_needed
-    while (jacobsthal.back() <= max_needed && jacobsthal.size() < max_needed)
+    while ((int)jacobsthal.back() <= max_needed && (int)jacobsthal.size() < max_needed)
     {
         int next = jacobsthal[jacobsthal.size() - 1] + 2 * jacobsthal[jacobsthal.size() - 2];
         jacobsthal.push_back(next);
@@ -121,7 +135,7 @@ void ford_johnson_vector(std::vector<int>& vector) {
 
     // Elements are grouped into pairs, and the larger element in each pair is moved to the first position.
     // so we can sort them easier
-    std::vector<std::pair<int, int>> pairs;
+    std::vector<std::pair<int, int> > pairs;
     for (int i = 0; i < size - 1; i += 2)
     {
         std::pair<int, int> pair = std::make_pair(vector[i], vector[i + 1]);
@@ -141,7 +155,7 @@ void ford_johnson_vector(std::vector<int>& vector) {
 
     std::vector<int> MainChain;
     std::vector<int> Pend;
-    for (std::vector<std::pair<int, int>>::iterator it = pairs.begin(); it != pairs.end(); ++it)
+    for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
         MainChain.push_back(it->first);
         Pend.push_back(it->second);
@@ -169,7 +183,7 @@ void ford_johnson_vector(std::vector<int>& vector) {
         int pos = binary_search(MainChain, struggler);
         MainChain.insert(MainChain.begin() + pos, struggler);
     }
-
+    vector = MainChain;
 }
 
 void ford_johnson_list(std::list<int>& lst) {
@@ -185,7 +199,7 @@ void ford_johnson_list(std::list<int>& lst) {
     }
 
     //  pairs typeshit
-    std::list<std::pair<int, int>> pairs;
+    std::list<std::pair<int, int> > pairs;
     for (it = lst.begin(); it != lst.end();) {
         int a = *it++;
         int b = *it++;
@@ -198,7 +212,7 @@ void ford_johnson_list(std::list<int>& lst) {
 
     // Build main chain and pend
     std::list<int> main_chain, pend;
-    for (std::list<std::pair<int, int>>::iterator pit = pairs.begin(); pit != pairs.end(); ++pit) {
+    for (std::list<std::pair<int, int> >::iterator pit = pairs.begin(); pit != pairs.end(); ++pit) {
         main_chain.push_back(pit->first);
         pend.push_back(pit->second);
     }
@@ -218,6 +232,13 @@ void ford_johnson_list(std::list<int>& lst) {
         // Move pend_it to the correct position
         std::advance(pend_it, order[i] - (i > 0 ? order[i - 1] + 1 : 0));
         int element = *pend_it;
+
+        // Find insertion position in main_chain using binary search
+        std::list<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), element);
+
+        // Insert the element
+        main_chain.insert(pos, element);
+    }
 
     // Insert struggler
     if (struggler != -1) {
