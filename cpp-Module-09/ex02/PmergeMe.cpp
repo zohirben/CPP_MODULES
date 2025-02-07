@@ -1,15 +1,34 @@
 #include "PmergeMe.hpp"
 
-void loadData(std::vector<int>& vec, std::list<int>& lst, char** av) {
-    for (int i = 1; av[i] != nullptr; ++i) {
-        try {
+void loadData(std::vector<int>& vec, std::list<int>& lst, char** av) 
+{
+    for (int i = 1; av[i] != nullptr; ++i) 
+    {
+        try 
+        {
+            // stoi automaticly throws exceptions for invalid non numeric numbers and out of range
+            // so all we gotta do is catch them ;)
             int number = std::stoi(av[i]);
+            if (number < 0)
+            {
+                std::cerr << "Error" << std::endl;
+                exit(1);
+            }
             vec.push_back(number);
             lst.push_back(number);
-        } catch (const std::invalid_argument& e) {
+            
+        } 
+        catch (const std::invalid_argument& e) 
+        {
             std::cerr << "Invalid argument: " << av[i] << " is not a number." << std::endl;
-        } catch (const std::out_of_range& e) {
+            std::cerr << "Error" << std::endl;
+            exit(1);
+        } 
+        catch (const std::out_of_range& e)
+        {
             std::cerr << "Out of range: " << av[i] << " is too large." << std::endl;
+            std::cerr << "Error" << std::endl;
+            exit(1);
         }
     }
 }
