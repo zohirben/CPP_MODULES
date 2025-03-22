@@ -120,7 +120,7 @@ int binary_search(const std::vector<int> &arr, int target)
         {
             low = mid + 1;
         }
-        else
+        else 
         {
             high = mid - 1;
         }
