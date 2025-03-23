@@ -2,7 +2,7 @@ CPP = c++
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SOURCE = main.cpp template.cpp
+SOURCE = main.cpp
 
 OBJ = $(SOURCE:.cpp=.o)
 

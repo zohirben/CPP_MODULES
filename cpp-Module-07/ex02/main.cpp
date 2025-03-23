@@ -83,4 +83,31 @@ int main()
             std::cout << copies[i] << " ";
         }
     }
+    std::cout << "\n--------------------------------\n";
+    Array<int> emptyArray; // Create an empty array
+    Array<int> intArray(5); // Create an array of 5 integers
+
+    // Access and modify elements
+    for (unsigned int i = 0; i < intArray.size(); i++)
+    {
+        intArray[i] = i * 10;
+    }
+
+    // Print elements
+    for (unsigned int i = 0; i < intArray.size(); i++)
+    {
+        std::cout << intArray[i] << std::endl;
+    }
+
+    // Access out of range element (will throw an exception)
+    try
+    {
+        std::cout << intArray[10] << std::endl;
+    }
+    catch (const std::out_of_range &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return 0;
 }
