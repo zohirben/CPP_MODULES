@@ -235,7 +235,7 @@ void ford_johnson_list(std::list<int>& lst) {
         pairs.push_back(std::make_pair(a, b));
     }
 
-    // sort pairs by first element
+    // sort pairs by first element, sort always going to sort based on the first element even tho this list is using pairs
     pairs.sort();
 
     // Build main chain and pend
