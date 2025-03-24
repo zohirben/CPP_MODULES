@@ -235,7 +235,7 @@ void ford_johnson_list(std::list<int>& lst) {
         pairs.push_back(std::make_pair(a, b));
     }
 
-    // Sort pairs by first element
+    // sort pairs by first element
     pairs.sort();
 
     // Build main chain and pend
@@ -251,24 +251,26 @@ void ford_johnson_list(std::list<int>& lst) {
         pend.pop_front();
     }
 
-    // Generate insertion order
+    // generate insertion order
     std::vector<int> order = insert_order_jaco(pend.size());
 
-    // Insert pend elements
+    // insert pend elements
     std::list<int>::iterator pend_it = pend.begin();
     for (size_t i = 0; i < order.size(); ++i) {
         // Move pend_it to the correct position
         std::advance(pend_it, order[i] - (i > 0 ? order[i - 1] + 1 : 0));
         int element = *pend_it;
 
-        // Find insertion position in main_chain using binary search
+        // find insertion position in main_chain using binary search.
+        // i used lower_bound cuz i dont want to implement binary search using linked list cuz am lazy and most important
+        // cuz lower_bound undercover already is using binary search
         std::list<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), element);
 
-        // Insert the element
+        // insert the element
         main_chain.insert(pos, element);
     }
 
-    // Insert struggler
+    // insert struggler
     if (struggler != -1) {
         std::list<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), struggler);
         main_chain.insert(pos, struggler);
